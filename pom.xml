@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.accelerator.authorization</groupId>
+    <artifactId>qa</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>authorization REST QA</name>
+    <description>card authorization REST QA</description>
+    <packaging>jar</packaging>
+    <properties>
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+        <company.name>BlankFactor</company.name>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <serenity.version>3.9.8</serenity.version>
+        <serenity.maven.version>2.4.51</serenity.maven.version>
+        <serenity.cucumber.version>2.4.51</serenity.cucumber.version>
+        <logback.version>1.2.9</logback.version>
+        <rest.version>5.3.1</rest.version>
+        <maven.version>3.1.2</maven.version>
+        <tags></tags>
+        <parallel.tests>4</parallel.tests>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- Serenity Dependencies -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-rest-assured</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay-rest</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-cucumber</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- libraries used directly from serenity-core-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${rest.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${rest.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+
+        <!-- General test libraries -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.24.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/Test*.java</include>
+                        <include>**/*TestSuite.java</include>
+                        <include>**/When*.java</include>
+                    </includes>
+                    <parallel>classes</parallel>
+                    <threadCount>${parallel.tests}</threadCount>
+                    <forkCount>${parallel.tests}</forkCount>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity.maven.version}</version>
+                <configuration>
+                  <tags>${tags}</tags>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.37.0</version>
+                <configuration>
+                    <!-- optional: limit format enforcement to just the files changed by this feature branch -->
+                    <!--<ratchetFrom>origin/master</ratchetFrom>-->
+                    <encoding>UTF-8</encoding>
+                    <!-- define a language-specific format -->
+                    <java>
+                        <!-- no need to specify files, inferred automatically, but you can if you want -->
+
+                        <!-- apply a specific flavor of google-java-format and reflow long strings -->
+                        <googleJavaFormat>
+                            <version>1.17.0
+                            </version>
+                            <style>AOSP</style>
+                            <reflowLongStrings>true</reflowLongStrings>
+                        </googleJavaFormat>
+
+                        <!-- make sure every file has the following copyright header.
+                          optionally, Spotless can set copyright years by digging
+                          through git history (see "license" section below) -->
+                        <licenseHeader>
+                            <content>/* ${company.name} (C)$YEAR */
+                            </content>  <!-- or <file>${project.basedir}/license-header</file> -->
+                        </licenseHeader>
+                    </java>
+                    <sql>
+                        <includes>
+                            <include>**/*.sql</include>
+                        </includes>
+                        <dbeaver/>
+                    </sql>
+                    <json>
+                        <includes>    <!-- You have to set the target manually -->
+                            <include>**/*.json</include>
+                        </includes>
+                        <gson>
+                            <indentSpaces>2
+                            </indentSpaces>
+                            <sortByKeys>false
+                            </sortByKeys>
+                        </gson>
+                    </json>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>apply</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.rudikershaw.gitbuildhook</groupId>
+                <artifactId>git-build-hook-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <installHooks>
+                        <pre-commit>./pre-commit.sh</pre-commit>
+                    </installHooks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
