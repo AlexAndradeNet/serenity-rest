@@ -1,4 +1,4 @@
-Feature: Looking up post codes
+Feature: Authorize transaction
 
   Scenario: Authorize a transaction
     Given I am a user with a valid credit card

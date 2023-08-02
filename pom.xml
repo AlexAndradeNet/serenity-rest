@@ -188,7 +188,7 @@
                 <version>2.37.0</version>
                 <configuration>
                     <!-- optional: limit format enforcement to just the files changed by this feature branch -->
-                    <!--<ratchetFrom>origin/master</ratchetFrom>-->
+                    <!-- ratchetFrom>origin/master</ratchetFrom -->
                     <encoding>UTF-8</encoding>
                     <!-- define a language-specific format -->
                     <java>

@@ -13,7 +13,7 @@ public class UserRequests {
     private static final String USER_TOKEN = "AutomationUser" + System.currentTimeMillis();
     private static final String EMAIL_RANDOM = System.currentTimeMillis() + "@blankfactor.com";
 
-    public static String CreateUser(CommonRequests commonRequests) {
+    public static String create(CommonRequests commonRequests) {
         String customPayload = getCustomPayload();
 
         commonRequests.post(SERVICE_PATH, customPayload, false);

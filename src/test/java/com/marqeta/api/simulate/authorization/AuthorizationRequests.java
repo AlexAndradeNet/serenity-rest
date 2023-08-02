@@ -24,7 +24,6 @@ public class AuthorizationRequests {
 
         commonRequests.post(SERVICE_PATH, customPayload, false);
         CommonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
-        // TODO: Validate the response for "PENDING" state
         return CommonAssertions.validateIfTheTokenIsAGuidAndGetIt(AuthorizationResponse.TOKEN);
     }
 
