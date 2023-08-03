@@ -1,6 +1,7 @@
 /* BlankFactor (C)2023 */
 package com.marqeta.api.commons;
 
+import com.blankfactor.log.LoggerUtil;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 
@@ -36,8 +37,8 @@ public class CommonRequests {
                         .body()
                         .asString();
 
-        System.out.println("POST " + servicePath + " " + servicePayload);
-        System.out.println("RESPONSE " + response);
+        LoggerUtil.info("POST " + servicePath + " " + servicePayload);
+        LoggerUtil.info("RESPONSE " + response);
     }
 
     public void post(Credentials credentials, String servicePath, String servicePayload) {
