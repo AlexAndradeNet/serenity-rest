@@ -44,3 +44,6 @@ Thumbs.db
 
 # Gradle wrapper jar files
 gradle/wrapper/gradle-wrapper.jar
+
+# Node modules
+node_modules/

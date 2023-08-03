@@ -1,30 +1,17 @@
 /* BlankFactor (C)2023 */
 package com.marqeta.api.commons;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.core.annotations.Step;
 
 public class CommonRequests {
-    private static String username;
-    private static String password;
 
-    public CommonRequests() {
-        // Create a Dotenv object and load the .env file
-        Dotenv dotenv = Dotenv.configure().load();
-
-        username = dotenv.get("MARQETA_USERNAME");
-        password = dotenv.get("MARQETA_PASSWORD");
-    }
-
-    public static String getUsername() {
-        return username;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public void post(String servicePath, String servicePayload, boolean isPayloadAVariable) {
+    @Step("POST {0} {1}")
+    public void post(
+            Credentials credentials,
+            String servicePath,
+            String servicePayload,
+            boolean isPayloadAVariable) {
 
         if (isPayloadAVariable) {
             servicePayload = EnvironmentProperties.getProperty(servicePayload);
@@ -40,7 +27,7 @@ public class CommonRequests {
                         .spec(ReusableSpecifications.getGenericRequestSpec())
                         .auth()
                         .preemptive()
-                        .basic(username, password)
+                        .basic(credentials.getUsername(), credentials.getPassword())
                         .when()
                         .body(servicePayload)
                         .post(servicePath)
@@ -53,7 +40,7 @@ public class CommonRequests {
         System.out.println("RESPONSE " + response);
     }
 
-    public void post(String servicePath, String servicePayload) {
-        post(servicePath, servicePayload, true);
+    public void post(Credentials credentials, String servicePath, String servicePayload) {
+        post(credentials, servicePath, servicePayload, true);
     }
 }

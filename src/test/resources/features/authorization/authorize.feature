@@ -1,3 +1,4 @@
+@authorize
 Feature: Authorize transaction
 
   Scenario: Authorize a transaction

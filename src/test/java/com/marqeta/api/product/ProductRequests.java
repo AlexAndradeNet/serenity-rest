@@ -3,7 +3,10 @@ package com.marqeta.api.product;
 
 import com.marqeta.api.commons.CommonAssertions;
 import com.marqeta.api.commons.CommonRequests;
+import com.marqeta.api.commons.Credentials;
 import com.marqeta.api.commons.EnvironmentProperties;
+import net.thucydides.core.annotations.Step;
+import net.thucydides.core.annotations.Steps;
 
 public class ProductRequests {
 
@@ -11,17 +14,16 @@ public class ProductRequests {
     private static final String SERVICE_PAYLOAD = "marqeta.product.payload";
     private static final String RESPONSE_SCHEMA = "marqeta.product.schema";
     private static final String PRODUCT_TOKEN = "AutomationCard" + System.currentTimeMillis();
+    @Steps private CommonRequests commonRequests;
+    @Steps private CommonAssertions commonAssertions;
 
-    private ProductRequests() {
-        // Prevents instantiation
-    }
-
-    public static String create(CommonRequests commonRequests, String fundingToken) {
+    @Step("Create a product")
+    public String create(Credentials credentials, String fundingToken) {
         String customPayload = getCustomPayload(fundingToken);
 
-        commonRequests.post(SERVICE_PATH, customPayload, false);
-        CommonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
-        CommonAssertions.validateFieldValue(ProductResponse.TOKEN, PRODUCT_TOKEN);
+        commonRequests.post(credentials, SERVICE_PATH, customPayload, false);
+        commonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
+        commonAssertions.validateFieldValue(ProductResponse.TOKEN, PRODUCT_TOKEN);
         return PRODUCT_TOKEN;
     }
 
