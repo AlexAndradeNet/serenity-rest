@@ -40,6 +40,9 @@
             "fast_funds_enabled"
           ]
         },
+        "preceding_related_transaction_token": {
+          "type": "string"
+        },
         "gpa": {
           "type": "object",
           "properties": {
@@ -56,6 +59,9 @@
               "type": "number"
             },
             "pending_credits": {
+              "type": "number"
+            },
+            "impacted_amount": {
               "type": "number"
             },
             "balances": {
@@ -78,6 +84,9 @@
                     },
                     "pending_credits": {
                       "type": "number"
+                    },
+                    "impacted_amount": {
+                      "type": "number"
                     }
                   },
                   "required": [
@@ -85,7 +94,8 @@
                     "ledger_balance",
                     "available_balance",
                     "credit_balance",
-                    "pending_credits"
+                    "pending_credits",
+                    "impacted_amount"
                   ]
                 }
               },
@@ -100,6 +110,7 @@
             "available_balance",
             "credit_balance",
             "pending_credits",
+            "impacted_amount",
             "balances"
           ]
         },
@@ -179,47 +190,11 @@
                     "created_time",
                     "last_modified_time"
                   ]
-                },
-                "gateway_log": {
-                  "type": "object",
-                  "properties": {
-                    "order_number": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "duration": {
-                      "type": "integer"
-                    },
-                    "timed_out": {
-                      "type": "boolean"
-                    },
-                    "response": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "code"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "order_number",
-                    "message",
-                    "duration",
-                    "timed_out",
-                    "response"
-                  ]
                 }
               },
               "required": [
                 "amount",
-                "source",
-                "gateway_log"
+                "source"
               ]
             },
             "funding_source_token": {
@@ -242,6 +217,9 @@
                 },
                 "amount": {
                   "type": "number"
+                },
+                "original_jit_funding_token": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -249,7 +227,8 @@
                 "method",
                 "user_token",
                 "acting_user_token",
-                "amount"
+                "amount",
+                "original_jit_funding_token"
               ]
             },
             "user_token": {
@@ -298,6 +277,9 @@
         "currency_code": {
           "type": "string"
         },
+        "approval_code": {
+          "type": "string"
+        },
         "response": {
           "type": "object",
           "properties": {
@@ -322,11 +304,15 @@
         "acquirer": {
           "type": "object",
           "properties": {
+            "institution_id_code": {
+              "type": "string"
+            },
             "system_trace_audit_number": {
               "type": "string"
             }
           },
           "required": [
+            "institution_id_code",
             "system_trace_audit_number"
           ]
         },
@@ -367,6 +353,9 @@
           "type": "string"
         },
         "network_reference_id": {
+          "type": "string"
+        },
+        "multi_clearing_sequence_number": {
           "type": "string"
         },
         "card_acceptor": {
@@ -450,6 +439,7 @@
         "card_token",
         "card_product_token",
         "original_credit",
+        "preceding_related_transaction_token",
         "gpa",
         "gpa_order",
         "duration",
@@ -460,6 +450,7 @@
         "amount",
         "issuer_interchange_amount",
         "currency_code",
+        "approval_code",
         "response",
         "network",
         "acquirer_fee_amount",
@@ -513,16 +504,19 @@
         "21": {
           "type": "string"
         },
-        "22": {
-          "type": "string"
-        },
-        "24": {
+        "25": {
           "type": "string"
         },
         "26": {
           "type": "string"
         },
+        "32": {
+          "type": "string"
+        },
         "37": {
+          "type": "string"
+        },
+        "38": {
           "type": "string"
         },
         "39": {
@@ -568,9 +562,6 @@
             "1": {
               "type": "string"
             },
-            "2": {
-              "type": "string"
-            },
             "3": {
               "type": "string"
             },
@@ -584,13 +575,30 @@
             "4"
           ]
         },
+        "54": {
+          "type": "string"
+        },
+        "56": {
+          "type": "object",
+          "properties": {
+            "7": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "7"
+          ]
+        },
         "63": {
           "type": "string"
         },
         "112": {
           "type": "object",
           "properties": {
-            "22": {
+            "101": {
+              "type": "string"
+            },
+            "102": {
               "type": "string"
             },
             "103": {
@@ -598,7 +606,8 @@
             }
           },
           "required": [
-            "22",
+            "101",
+            "102",
             "103"
           ]
         },
@@ -611,9 +620,6 @@
             "29": {
               "type": "string"
             },
-            "34": {
-              "type": "string"
-            },
             "35": {
               "type": "string"
             },
@@ -624,7 +630,6 @@
           "required": [
             "2",
             "29",
-            "34",
             "35",
             "102"
           ]
@@ -646,14 +651,17 @@
         "15",
         "17",
         "21",
-        "22",
-        "24",
+        "25",
         "26",
+        "32",
         "37",
+        "38",
         "39",
         "42",
         "43",
         "44",
+        "54",
+        "56",
         "63",
         "112",
         "113",

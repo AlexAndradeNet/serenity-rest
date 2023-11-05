@@ -1,9 +1,8 @@
 /* BlankFactor (C)2023 */
 package com.marqeta.api.simulate.authorization;
 
-import com.marqeta.api.commons.CommonAssertions;
+import com.blankfactor.enums.TransactionStateEnum;
 import com.marqeta.api.commons.CommonRequests;
-import com.marqeta.api.commons.Credentials;
 import com.marqeta.api.commons.EnvironmentProperties;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
@@ -12,21 +11,19 @@ public class AuthorizationRequests {
 
     private static final String SERVICE_PATH = "marqeta.simulate.authorization.endpoint";
     private static final String SERVICE_PAYLOAD = "marqeta.simulate.authorization.payload";
-    private static final String RESPONSE_SCHEMA = "marqeta.simulate.authorization.schema";
     @Steps private CommonRequests commonRequests;
-    @Steps private CommonAssertions commonAssertions;
+    @Steps private AuthorizationAssertions authorizationAssertions;
 
-    public String authorize(Credentials credentials, String cardToken) {
-        return authorize(credentials, cardToken, 1000);
+    public String authorize(String cardToken) {
+        return authorize(cardToken, 1000);
     }
 
     @Step("Authorize a transaction")
-    public String authorize(Credentials credentials, String cardToken, int amount) {
+    public String authorize(String cardToken, int amount) {
         String customPayload = getCustomPayload(cardToken, amount);
 
-        commonRequests.post(credentials, SERVICE_PATH, customPayload, false);
-        commonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
-        return commonAssertions.validateIfTheTokenIsAGuidAndGetIt(AuthorizationResponse.TOKEN);
+        commonRequests.post(SERVICE_PATH, customPayload, false);
+        return authorizationAssertions.verifyFullCreatedResponseAndSchema();
     }
 
     private String getCustomPayload(String cardToken, int amount) {
@@ -36,7 +33,9 @@ public class AuthorizationRequests {
         return payload;
     }
 
-    public void verifyTransactionState(String transactionState) {
-        commonAssertions.validateFieldValue(AuthorizationResponse.STATE, transactionState);
+    public String authorizeAndVerifyTransactionState(String cardToken) {
+        String transactionToken = authorize(cardToken);
+        authorizationAssertions.verifyState(TransactionStateEnum.PENDING);
+        return transactionToken;
     }
 }

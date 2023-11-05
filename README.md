@@ -1,7 +1,10 @@
 # INTEGRATION TETS ROBOT FOR BLANKFACTOR DIGITAL BANK - MARQETA
 
-This is the integration tests robot for the Blankfactor Digital Bank emulator
-for Marqeta.
+This is the integration testing robot for the Blankfactor Digital Bank emulator
+designed for Marqeta.
+
+This robot carries out JSON Schema validations of Marqeta responses. This helps
+detect any changes and assess their impact on the Blankfactor Digital Bank.
 
 ---
 
@@ -25,6 +28,7 @@ for Marqeta.
 * Gherkin
 * Maven
 * Sonarlint
+* Lombok
 
 ---
 
@@ -39,19 +43,20 @@ for Marqeta.
 
 ## 🚀 EXECUTION
 
-Prior execution you must create a `.env` file in the root of the project or
-create some environment variables with the following values:
+Prior execution you must create **System variables** or a `.env` file in the
+root of the project or create some environment variables with the following
+values:
 
 ```
 MARQETA_USERNAME=myusername
 MARQETA_PASSWORD=mypassword
+BF_MARQETA_PUBLIC_URL=https://url.public.com
+BF_CORE_PUBLIC_URL=https://url.public.or.local.com
 ```
 
-Prior to launch executions you need to have the following services running
-locally or in AWS.
-
-You have to update the blankfactor url (in AWS or Gurok) in the
-file `src/test/resources/serenity.conf` property `blankfactor.base.endpoint`.
+Prior to launch executions you need to have the Blankfactor Bank service (the
+main project) running locally (with ngrok) or in AWS. The CORE url would be a
+public or local url.
 
 **NOTE:** To local launch you need to
 follow [these instructions](https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/DigitalBank/browse/refs/heads/develop?region=us-east-1).
@@ -90,8 +95,7 @@ important to keep in mind that:
 
 > The ratio of time spent reading versus writing is well over 10 to 1. We are
 > constantly reading old code as part of the effort to write new code. …making
-> it
-> easy to read makes it easier to write.
+> it easy to read makes it easier to write.
 
 _Robert C. Martin (a.k.a Uncle Bob)_
 
@@ -141,8 +145,7 @@ make it easier to identify the purpose or intention of a commit.
 
 **Want to learn more?** For more information about Serenity BDD, you can read
 the [Serenity BDD Book](https://serenity-bdd.github.io/theserenitybook/latest/index.html),
-the
-official online Serenity documentation source. Other sources include:
+the official online Serenity documentation source. Other sources include:
 
 * [Byte-sized Serenity BDD](https://www.youtube.com/channel/UCav6-dPEUiLbnu-rgpy7_bw/featured)
   tips and tricks about Serenity BDD

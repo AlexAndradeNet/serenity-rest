@@ -3,7 +3,6 @@ package com.marqeta.api.user;
 
 import com.marqeta.api.commons.CommonAssertions;
 import com.marqeta.api.commons.CommonRequests;
-import com.marqeta.api.commons.Credentials;
 import com.marqeta.api.commons.EnvironmentProperties;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
@@ -19,10 +18,10 @@ public class UserRequests {
     @Steps private CommonAssertions commonAssertions;
 
     @Step("Create a user")
-    public String create(Credentials credentials) {
+    public String create() {
         String customPayload = getCustomPayload();
 
-        commonRequests.post(credentials, SERVICE_PATH, customPayload, false);
+        commonRequests.post(SERVICE_PATH, customPayload, false);
         commonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
         commonAssertions.validateFieldValue(UserResponse.TOKEN, USER_TOKEN);
         return USER_TOKEN;

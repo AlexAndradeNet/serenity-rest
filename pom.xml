@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.blankfactor.marqeta</groupId>
     <artifactId>digitalbankqa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Marqeta DigitalBank REST QA</name>
-    <description>card authorization REST QA</description>
+    <name>QA-DigitalBank-Marqeta</name>
+    <description>DigitalBank Marqeta REST QA</description>
     <packaging>jar</packaging>
     <properties>
         <encoding>UTF-8</encoding>
@@ -16,6 +17,16 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.exclusions>
+            **/*Generated.java,
+            /target/
+        </sonar.exclusions>
+        <sonar.coverage.exclusions>
+            **/src/main/**/**.java
+        </sonar.coverage.exclusions>
+        <sonar.scm.provider>git</sonar.scm.provider>
+        <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
         <serenity.version>3.9.8</serenity.version>
         <serenity.maven.version>2.4.51</serenity.maven.version>
         <serenity.cucumber.version>2.4.51</serenity.cucumber.version>
@@ -31,6 +42,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
         </dependency>
 
         <!-- Serenity Dependencies -->
@@ -188,7 +204,7 @@
                 <artifactId>serenity-maven-plugin</artifactId>
                 <version>${serenity.version}</version>
                 <configuration>
-                  <tags>${tags}</tags>
+                    <tags>${tags}</tags>
                 </configuration>
                 <executions>
                     <execution>

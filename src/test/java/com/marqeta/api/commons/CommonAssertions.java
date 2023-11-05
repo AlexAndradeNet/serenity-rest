@@ -16,7 +16,7 @@ public class CommonAssertions {
             "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
 
     @Step("Verify response code 200")
-    private void shouldSeeSuccessfulStatusCode() {
+    public void shouldSeeSuccessfulStatusCode() {
         restAssuredThat(response -> response.statusCode(HttpStatus.SC_OK));
     }
 

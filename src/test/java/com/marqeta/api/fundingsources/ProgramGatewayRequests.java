@@ -3,7 +3,6 @@ package com.marqeta.api.fundingsources;
 
 import com.marqeta.api.commons.CommonAssertions;
 import com.marqeta.api.commons.CommonRequests;
-import com.marqeta.api.commons.Credentials;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 
@@ -16,8 +15,8 @@ public class ProgramGatewayRequests {
     @Steps private CommonAssertions commonAssertions;
 
     @Step("Create a funding source")
-    public String createFundingSource(Credentials credentials) {
-        commonRequests.post(credentials, SERVICE_PATH, SERVICE_PAYLOAD);
+    public String createFundingSource() {
+        commonRequests.post(SERVICE_PATH, SERVICE_PAYLOAD);
         commonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
         return commonAssertions.validateIfTheTokenIsAGuidAndGetIt(ProgramGatewayResponse.TOKEN);
     }

@@ -3,7 +3,6 @@ package com.marqeta.api.card;
 
 import com.marqeta.api.commons.CommonAssertions;
 import com.marqeta.api.commons.CommonRequests;
-import com.marqeta.api.commons.Credentials;
 import com.marqeta.api.commons.EnvironmentProperties;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
@@ -17,10 +16,10 @@ public class CardRequests {
     @Steps private CommonAssertions commonAssertions;
 
     @Step("Create a card")
-    public String create(Credentials credentials, String userToken, String productToken) {
+    public String create(String userToken, String productToken) {
         String customPayload = getCustomPayload(userToken, productToken);
 
-        commonRequests.post(credentials, SERVICE_PATH, customPayload, false);
+        commonRequests.post(SERVICE_PATH, customPayload, false);
         commonAssertions.verifyFullCreatedResponseAndSchema(RESPONSE_SCHEMA);
         return commonAssertions.validateIfTheTokenIsAGuidAndGetIt(CardResponse.TOKEN);
     }
